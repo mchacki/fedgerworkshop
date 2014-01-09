@@ -21,28 +21,24 @@
   </head>
   <body ng-controller="UserController">
     <section class="container">
+      <section ng-hide="modify">
+        <h1>Choose a user</h1>
+        <select ng-model="selected" ng-options="u.name for u in users" ng-click="selectUser">
+          <option value="">--- choose a user ---</option>
+        </select>
+        <button ng-click="newUser()" class="btn btn-primary">New User</button>
+      </section>
       <section ng-show="modify">
         <h1 ng-show="adding">Add a user</h1>
         <h1 ng-hide="adding">Modify a user</h1>
         <form role="form">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter user name" ng-model="selected.name">
+            <input ng-model="selected.name" type="text" class="form-control" id="name" placeholder="Enter user name">
           </div>
-          <div class="form-group">
-            <label for="hobbies">Hobbies</label>
-            <input type="text" class="form-control" id="hobbies" placeholder="Enter hobbies">
-          </div>
-          <button ng-show="adding" ng-click="modifyUser()" class="btn btn-default">New User</button>
-          <button ng-hide="adding" ng-click="modifyUser()" class="btn btn-default">Change User</button>
+          <button ng-hide="adding" ng-click="modifyUser()" class="btn btn-primary">Change User</button>
+          <button ng-show="adding" ng-click="modifyUser()" class="btn btn-primary">Add User</button>
         </form>
-      </section>
-      <section ng-hide="modify">
-        <h1>Choose a user</h1>
-        <select ng-model="selected" ng-options="u.name for u in users" ng-click="selectUser">
-          <option value="">--- choose a user ---</option>
-        </select>
-        <button ng-click="newUser()" class="btn btn-default">New User</button>
       </section>
     </section>
   </body>

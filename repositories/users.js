@@ -9,7 +9,7 @@
     summaries: function() {
       return _.map(this.collection.toArray(), function(user) {
         return {
-          key: user._key,
+          _key: user._key,
           name: user.name
         };
       });

@@ -2,16 +2,14 @@ function UserController($scope, $http) {
   $scope.adding = false;
   $scope.modify = false;
   $scope.selected = null;
-  $scope.users = [
-    {
-      _key: "123",
-      name: "Harry"
-    },
-    {
-      _key: "321",
-      name: "Peter"
-    }
-  ];
+  $scope.users = [];
+  var reloadUsers = function() {
+    $http.get("user").success(function(res) {
+      $scope.users = res;
+    });
+  };
+
+  reloadUsers();
 
   $scope.newUser = function() {
     $scope.adding = true;
@@ -20,13 +18,18 @@ function UserController($scope, $http) {
   };
 
   $scope.modifyUser = function() {
+    var success = function() {
+      $scope.adding = false;
+      $scope.modify = false;
+      reloadUsers();
+    };
     if ($scope.adding) {
-      console.log("New");
+      $http.post("user", $scope.selected)
+        .success(success);
     } else {
-      console.log("Update");
+      $http.put("user/" + $scope.selected._key, $scope.selected)
+        .success(success);
     }
-    $scope.adding = false;
-    $scope.modify = false;
   };
 
   $scope.$watch("selected", function() {
