@@ -29,6 +29,21 @@
   controller.get("/users", function(req, res) {
     res.json(users.summaries());
   });
-  // put
-  // delete
+
+  controller.put("user/:key", function(req, res) {
+    var key = req.params("key"),
+      newInformation = req.params("user");
+    users.replaceById(key, newInformation);
+  }).pathParam("key", {
+    description: "The key of the user",
+    type: "string"
+  }).bodyParam("user", "The user information to add", User);
+
+  controller.del("user/:key", function(req, res) {
+    var key = req.params("key");
+    users.removeById(key);
+  }).pathParam("key", {
+    description: "The key of the user",
+    type: "string"
+  });
 }());
