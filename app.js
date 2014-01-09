@@ -26,7 +26,7 @@
     type: "string"
   });
 
-  controller.get("/users", function(req, res) {
+  controller.get("/user", function(req, res) {
     res.json(users.summaries());
   });
 
