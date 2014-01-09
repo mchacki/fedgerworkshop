@@ -3,8 +3,11 @@
   var Foxx = require("org/arangodb/foxx"),
     ArangoError = require("org/arangodb").ArangoError,
     Users = require("./repositories/users").Repository,
+    Friendships = require("./repositories/friendships").Repository,
     User = require("./models/user").Model,
+    Friendship = require("./models/friendship").Model,
     users,
+    friendships,
     controller;
 
   controller = new Foxx.Controller(applicationContext);
@@ -12,6 +15,12 @@
   users = new Users(controller.collection("users"), {
     model: User
   });
+
+  friendships = new Friendships(controller.collection("friendships"), {
+    model: Friendship
+  });
+
+  friendships.usersCollection = controller.collection("users").name();
 
   controller.post("/user", function(req, res) {
     var toAdd = req.params("user");
@@ -54,4 +63,9 @@
     description: "The key of the user",
     type: "string"
   });
+
+  controller.post("/friendship", function(req, res) {
+    var friendship = req.params("friendship");
+    friendships.save(friendship);
+  }).bodyParam("friendship", "The friendship you want to create", Friendship);
 }());
