@@ -1,0 +1,35 @@
+{
+  "name": "workshop",
+  "version": "1.0.0",
+  "description": "Workshop Application",
+  "author": "Michael Hackstein, Lucas Dohmen",
+  "license": "Apache 2 License",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mchacki/fedgerworkshop.git"
+  },
+  "keywords": [
+    "workshop",
+    "demo"
+  ],
+  "engines": {
+    "arangodb": "1.4"
+  },
+  "controllers": {
+    "/": "app.js"
+  },
+  "setup": "scripts/setup.js",
+  "assets": {
+    "index.html": {
+      "files": [
+        "assets/index.html"
+      ]
+    },
+    "application.js": {
+      "files" : [
+        "assets/app.js"
+      ]
+    }
+  },
+  "lib": "."
+}
