@@ -26,11 +26,19 @@
     type: "string"
   });
 
+  controller.get("/user-by-name/:name", function(req, res) {
+    var name = req.params("name");
+    res.json(users.byName(name));
+  }).pathParam("name", {
+    description: "The name of the user you want to find",
+    type: "string"
+  }).errorResponse(ArangoError, 404, "User not found");
+
   controller.get("/user", function(req, res) {
     res.json(users.summaries());
   });
 
-  controller.put("user/:key", function(req, res) {
+  controller.put("/user/:key", function(req, res) {
     var key = req.params("key"),
       newInformation = req.params("user");
     users.replaceById(key, newInformation);
@@ -39,7 +47,7 @@
     type: "string"
   }).bodyParam("user", "The user information to add", User);
 
-  controller.del("user/:key", function(req, res) {
+  controller.del("/user/:key", function(req, res) {
     var key = req.params("key");
     users.removeById(key);
   }).pathParam("key", {
